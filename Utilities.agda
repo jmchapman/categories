@@ -10,18 +10,21 @@ open import Data.Unit
 open import Level
 open import Data.Product public
 
-record Σ' {a b}(A : Set a)(B : A → Set b) : Set (a ⊔ b) where
-    constructor _,,_
-    field fst : A
-          .snd : B fst
-open Σ' public
-
 postulate ext : ∀{a b}{A : Set a}{B B' : A → Set b}{f : ∀ a → B a}
                 {g : ∀ a → B' a} → (∀ a → f a ≅ g a) → f ≅ g
 
 postulate iext : ∀{a b}{A : Set a}{B B' : A → Set b}{f : ∀ {a} → B a}
                  {g : ∀{a} → B' a} → (∀ a → f {a} ≅ g {a}) → 
                  _≅_ {_}{ {a : A} → B a} f { {a : A} → B' a} g
+
+postulate dext : ∀{a b}{A A' : Set a}{B : A → Set b}{B' : A' → Set b}
+                 {f : ∀ a → B a}{g : ∀ a → B' a} → 
+                (∀ {a a'} → a ≅ a' → f a ≅ g a') → f ≅ g
+
+postulate diext : ∀{a b}{A A' : Set a}{B : A → Set b}{B' : A' → Set b}
+                  {f : ∀ {a} → B a}{f' : ∀{a'} → B' a'} → 
+                  (∀{a a'} → a ≅ a' → f {a} ≅ f' {a'}) → 
+                  _≅_ {_}{ {a : A} → B a} f { {a' : A'} → B' a'} f'
 
 cong₃ : ∀{a b c d}
         {A : Set a}
@@ -48,12 +51,18 @@ cong₄ : ∀{a b c d e}
         f a b c d ≅ f a' b' c' d'
 cong₄ refl refl refl refl f = refl
 
+dcong : ∀{a b}{A A' : Set a}{B : A → Set b}{B' : A' → Set b}
+        {f : (a : A) → B a}{f' : (a : A') → B' a}{a : A}{a' : A'} → 
+        a ≅ a' → B ≅ B' → f ≅ f' → f a ≅ f' a'
+dcong refl refl refl = refl
+
 fixtypes : ∀{i}{A A' A'' A''' : Set i}{a : A}{a' : A'}{a'' : A''}{a''' : A'''}
-            {p : a ≅ a'}{q : a'' ≅ a'''} →
-            a ≅ a'' → p ≅ q
+           {p : a ≅ a'}{q : a'' ≅ a'''} →
+           a ≅ a'' → p ≅ q
 fixtypes {p = refl} {refl} refl = refl
 
-fixtypes' : ∀{i}{A : Set i}{a a' a'' a''' : A}{p : a ≅ a'}{q : a'' ≅ a'''} →
+fixtypes' : ∀{i}{A A' A'' A''' : Set i}{a : A}{a' : A'}{a'' : A''}{a''' : A'''}
+            {p : a ≅ a'}{q : a'' ≅ a'''} →
             a' ≅ a''' → p ≅ q
 fixtypes' {p = refl}{q = refl} refl = refl
 
