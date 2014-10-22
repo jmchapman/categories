@@ -22,7 +22,7 @@ AlgEq {X}{Y} p q = cong₄
   {A = Obj}
   {B = λ acar → ∀ Z → Hom Z acar → Hom (T Z) acar}
   {C = λ acar astr → ∀{Z}{f : Hom Z acar} → f ≅ comp (astr Z f) η}
-  {D = λ acar astr → ∀{Z W}{k : Hom Z (T W)} {f : Hom W acar} →
+  {D = λ acar astr _ → ∀{Z W}{k : Hom Z (T W)} {f : Hom W acar} →
      astr Z (comp (astr W f) k) ≅ comp (astr W f) (bind k)}
   p 
   (ext q)

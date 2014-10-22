@@ -18,7 +18,8 @@ IdF C = record {OMap = id; HMap = id; fid = refl; fcomp = refl}
 open Fun
 open Cat
 
-•fid : ∀{a b}{C D E : Cat {a}{b}} (F : Fun D E)(G : Fun C D){X : Obj C} →
+•fid : ∀{a b c d e f}{C : Cat {a}{b}}{D : Cat {c}{d}}{E : Cat {e}{f}} → 
+       (F : Fun D E)(G : Fun C D){X : Obj C} →
        HMap F (HMap G (iden C {X})) ≅ iden E {OMap F (OMap G X)}
 •fid {C = C}{D}{E} F G =  
   proof
@@ -29,7 +30,8 @@ open Cat
   iden E 
   ∎ 
 
-•fcomp : ∀{a b}{C D E : Cat {a}{b}} (F : Fun D E)(G : Fun C D)
+•fcomp : ∀{a b c d e f}{C : Cat {a}{b}}{D : Cat {c}{d}}{E : Cat {e}{f}} → 
+  (F : Fun D E)(G : Fun C D)
   {X Y Z : Obj C} {f : Hom C Y Z}{g : Hom C X Y} →
   (HMap F ∘ HMap G) (comp C f g) 
   ≅ 
@@ -43,7 +45,8 @@ open Cat
   comp E (HMap F (HMap G f))(HMap F (HMap G g)) 
   ∎
 
-_•_ : ∀{a b}{C D E : Cat {a}{b}} → Fun D E → Fun C D → Fun C E
+_•_ : ∀{a b c d e f}{C : Cat {a}{b}}{D : Cat {c}{d}}{E : Cat {e}{f}} → 
+      Fun D E → Fun C D → Fun C E
 F • G = record {
   OMap  = OMap F ∘ OMap G;
   HMap  = HMap F ∘ HMap G;
@@ -64,7 +67,7 @@ FunEq : ∀{a b c d}{C : Cat {a} {b}}{D : Cat {c} {d}}{F G : Fun C D} →
 FunEq {C = C}{D}{F}{G} p q = cong₄
   {B = λ OMap → ∀{X Y} → Hom C X Y → Hom D (OMap X) (OMap Y)}
   {λ OMap HMap → ∀{X} → HMap (iden C {X}) ≅ iden D {OMap X}}
-  {λ OMap HMap → ∀{X Y Z}{f : Hom C Y Z}{g : Hom C X Y} → 
+  {λ OMap HMap _ → ∀{X Y Z}{f : Hom C Y Z}{g : Hom C X Y} → 
      HMap (comp C f g) ≅ comp D (HMap f) (HMap g)}
   p
   (iext λ X → iext λ Y → ext q)
