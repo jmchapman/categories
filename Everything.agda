@@ -34,7 +34,6 @@ open import Monads.EM
 open import Monads.EM.Functors
 open import Monads.EM.Adjunction
 
--- here be dragons
 open import Monads.CatofAdj
 open import Monads.CatofAdj.InitAdj
 open import Monads.CatofAdj.TermAdjHom
