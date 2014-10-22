@@ -1,3 +1,5 @@
+{- A category theory library by James Chapman and Niccolò Veltri -}
+
 module Everything where
 
 open import Utilities
@@ -5,6 +7,16 @@ open import Utilities
 open import Categories
 open import Categories.Initial
 open import Categories.Terminal
+
+open import Categories.Monos
+open import Categories.Epis
+open import Categories.Isos
+open import Categories.Idems
+open import Categories.Sections
+
+open import Categories.Pullbacks
+open import Categories.Pullbacks.PullbacksLemmas
+open import Categories.Pullbacks.PastingLemmas
 
 open import Functors
 open import Naturals

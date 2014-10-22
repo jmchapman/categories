@@ -9,13 +9,13 @@ module Categories.Isos {a b}(X : Cat {a}{b}) where
   record Iso {A B : Obj} (f : Hom A B) : Set b where
     constructor _,,_,,_
     field inv  : Hom B A
-          .rinv : comp f inv ≅ iden {B}
-          .linv : comp inv f ≅ iden {A}
+          rinv : comp f inv ≅ iden {B}
+          linv : comp inv f ≅ iden {A}
 
   idiso : ∀{A} → Iso (iden {A})
   idiso = iden ,, idl ,, idl
 
-  .invuniq : ∀{A B}(f : Hom A B)(p q : Iso f) → Iso.inv p ≅ Iso.inv q
+  invuniq : ∀{A B}(f : Hom A B)(p q : Iso f) → Iso.inv p ≅ Iso.inv q
   invuniq f piso qiso =
     let open Iso piso renaming (inv to g; rinv to p; linv to p') 
         open Iso qiso renaming (inv to g'; rinv to q; linv to q') 
